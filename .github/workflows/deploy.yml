@@ -1,0 +1,35 @@
+# .github/workflows/deploy.yml
+
+name: Build and Push Docker Image to Docker Hub
+
+# This workflow runs on every push to the 'main' branch
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest # Use a standard Linux runner
+
+    steps:
+      # Step 1: Check out your repository code
+      - name: Check out repo
+        uses: actions/checkout@v3
+
+      # Step 2: Log in to Docker Hub
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      # Step 3: Build and push the Docker image
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          # --- THIS IS THE KEY PART FOR YOUR STRUCTURE ---
+          # 'context' tells Docker where to look for the Dockerfile
+          context: ./yolo_api 
+          push: true
+          # Tag the image with your Docker Hub username and repo name
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/yolo-api:latest
