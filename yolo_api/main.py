@@ -19,10 +19,10 @@ app = FastAPI(title="YOLOv8 Object Detection API")
 
 # --- 3. Define API Endpoints ---
 @app.get("/", include_in_schema=False)
-@app.get("/")
+@app.head("/")
 def read_root():
     """ A simple endpoint to confirm the server is running. """
-    return {"status": "ok", "message": "YOLOv8 API is running successfully."}
+    return {"status": "ok", "message": "YOLOv8 API is running boyaaa."}
 
 
 @app.post("/detect/")

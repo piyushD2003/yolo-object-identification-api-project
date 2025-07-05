@@ -33,3 +33,7 @@ jobs:
           push: true
           # Tag the image with your Docker Hub username and repo name
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/yolo-api:latest
+      
+      - name: Trigger Render Deploy
+        # This step uses a simple command-line tool (curl) to send a request to the hook URL.
+        run: curl "${{ secrets.RENDER_DEPLOY_HOOK }}"
